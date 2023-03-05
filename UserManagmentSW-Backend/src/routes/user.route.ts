@@ -14,7 +14,7 @@ router.get('/role/:role', countRole)
 router.get('/login', login)
 //changePassword
 router.put('/changePass/:id', changePassword)
-router.get('/joinYear/:joiningYear', getJoinYear)
+router.get('/joinYear/:id', getJoinYear)
 router.get('/afterJoinYear/:joiningYear', getJoinYearAndAfter)
 
 router.post('/', validate(Usertype) ,createUser)

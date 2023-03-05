@@ -180,14 +180,21 @@ export const changePassword = async(req: Request, res: Response)=> {
 // Create endpoint that takes joiningYear and userid , and return if this user joined with the date that being sent or not
 
 export const getJoinYear = async(req: Request, res: Response)=> {
-    const users = await prisma.user.findMany({
+    const { id } = req.params;
+    const { joiningYear } = req.body;
+
+    const user = await prisma.user.findFirst({
         where: {
-            joiningYear: req.params.joiningYear
+            id,
+            joiningYear
         },
-    
     })
     try {
-        res.json({"users": users})
+        if(user){
+            res.json({"message": `${user.username} join in this year ${joiningYear}` ,"user": user})
+        }else{
+            res.json({"message": `user not join in this year ${joiningYear}`})
+        }
     } catch (error) {
         res.json(error)
     }
@@ -202,7 +209,6 @@ export const getJoinYearAndAfter = async(req: Request, res: Response)=> {
                 gt: req.params.joiningYear
             } 
         },
-    
     })
     try {
         res.json({"users": users})
