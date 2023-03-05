@@ -82,7 +82,9 @@ export const findMovieByRating = async (req:Request, res:Response)=>{
     try{
         let movie = await prisma.movie.findMany({
             where: {
-                rating: parseInt(req.params.rating)
+                rating: {
+                    gte: parseInt(req.params.rating)
+                }
             }
         })
         console.log(movie);
